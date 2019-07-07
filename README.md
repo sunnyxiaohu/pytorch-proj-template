@@ -13,5 +13,11 @@ a template for pytorch  project
 - roi_temporal_pooling
 - nms
 
-## los contraining:
+## loss containing:
+- triplet loss
+
+## dist containing
+- dist_utils
+- sampler_utils
+- example
 
