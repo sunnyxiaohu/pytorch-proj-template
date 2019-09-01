@@ -1,0 +1,59 @@
+batch_size: 32
+common:
+    model:
+        arch: proxylessnet
+        kwargs:
+            scale: 1.0
+            channel_dist: [16,32,64,128,256]
+            alloc_space: [1,3,3,7,3]
+            cell_plan: mobileV2
+            alloc_plan: NR
+            latency_alpha: 0.00032
+            latency_beta: 2
+            latency_target: 44
+
+    search: True
+    with_latency: True
+
+    augmentation:
+        input_size: 224
+        test_resize: 256
+        colorjitter: [0.2, 0.2, 0.2, 0.1]
+
+    workers: 3
+    batch_size: 16
+
+    lr_scheduler:
+        type: COSINE
+
+        base_lr: 0.025
+        warmup_lr: 0.2
+        warmup_steps: 2500
+        min_lr: 0.0
+        max_iter: 250000
+
+    optimizer:
+        type: SGD
+        kwargs:
+            momentum: 0.9
+            weight_decay: 0.00004
+            nesterov: True
+
+    no_wd: True
+    label_smooth: 0.1
+
+    arch_optimizer:
+        type: Adam
+        lr: 0.001
+        beta1: 0.0
+        beta2: 0.999
+
+    val_freq: 1000
+    print_freq: 20
+
+    train_root: /mnt/lustre/share/images/train
+    train_source: /mnt/lustre/share/liangfeng/proxyless_dataset/trains.txt
+    val_root: /mnt/lustre/share/images/val
+    val_source: /mnt/lustre/share/images/meta/val.txt
+    arch_root: /mnt/lustre/share/images/train
+    arch_source: /mnt/lustre/share/liangfeng/proxyless_dataset/vals.txt
